@@ -1,22 +1,29 @@
 {
-  "name": "entrega_backend_luisjuarez",
+  "name": "primeraentrega_luisjuarez",
   "version": "1.0.0",
-  "description": "Proyecto de coderhouse",
+  "description": "Primer servidor con express para la entrega del curso",
   "keywords": [
-    "JavaScript",
     "Node",
-    "Backend",
-    "Forklift"
+    "Entrega",
+    "Backend"
   ],
+  "homepage": "https://github.com/luisjuarezt16/backend-luisjuarez#readme",
+  "bugs": {
+    "url": "https://github.com/luisjuarezt16/backend-luisjuarez/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luisjuarezt16/backend-luisjuarez.git"
+  },
   "license": "MIT",
   "author": "Luis Juarez",
   "type": "commonjs",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "dependencies": {
-    "bootstrap": "5.3.8" ,
-    "chalk": "5.6.2"
+    "express": "^5.2.1"
   }
 }

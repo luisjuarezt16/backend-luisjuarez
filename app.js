@@ -3,6 +3,8 @@ import { engine } from 'express-handlebars'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
+import http from 'http'
+import { Server } from 'socket.io'
 
 import homerouter from './routes/home.routes.js'
 import servicesRouter from './routes/services.routes.js'
@@ -13,8 +15,11 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const PORT = 3000
 
-// motor de plantillas
+// Crear servidor HTTP y Socket.IO
+const httpServer = http.createServer(app)
+const io = new Server(httpServer)
 
+// Configuración de Handlebars
 app.engine('hbs', engine({
     extname: '.hbs',
     helpers: {
@@ -27,23 +32,24 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// middlewares
-
+// Middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-// archivos estaticos
-
+// Archivos estáticos
 app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
-// rutas principales
-
+// Rutas principales
 app.use('/', homerouter)
 app.use('/services', servicesRouter)
 
-// ruta productos
+// Ruta chat
+app.get('/chat', (req, res) => {
+    res.render('chat', { title: 'Chat' })
+})
 
+// Ruta productos
 app.get('/products', (req, res) => {
 
     const productsPath = path.join(__dirname, 'data', 'products.json')
@@ -58,16 +64,28 @@ app.get('/products', (req, res) => {
     })
 })
 
-// error 404
+// Socket.IO
+io.on("connection", (socket) => {
 
+    console.log("Usuario conectado")
+
+    socket.on("chat:message", (data) => {
+        io.emit("chat:message", data)
+    })
+
+    socket.on("disconnect", () => {
+        console.log("Usuario desconectado")
+    })
+})
+
+// 404
 app.use((req, res) => {
     res.status(404).render('404', {
         title: 'pagina no encontrada'
     })
 })
 
-// servidor
-
-app.listen(PORT, () => {
-    console.log(`servidor escuchando en http://localhost:${PORT}`)
+// Iniciar servidor
+httpServer.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })

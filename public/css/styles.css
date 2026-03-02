@@ -1,65 +1,74 @@
+/* tipografia base */
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
     margin: 0;
-    background: #f8f9fa;
-    color: #333;
+    background: #c40000;
+    color: #ffffff;
 }
 
-/* Sticky footer layout */
+/* layout sticky footer */
+
 html,
 body {
     height: 100%;
-    margin: 0;
     display: flex;
     flex-direction: column;
 }
 
+/* header */
+
 header {
-    background: #343a40;
-    color: #fff;
-    padding: 1rem;
+    background: #900000;
+    color: #ffffff;
+    padding: 1.2rem;
+    border-bottom: 3px solid #000000;
 }
 
 nav a {
-    color: #ffd500;
-    margin: 0 0.5rem;
+    color: #ffffff;
+    margin: 0 0.8rem;
     text-decoration: none;
+    font-weight: 600;
 }
+
+nav a:hover {
+    color: #000000;
+}
+
+/* contenedor general */
 
 .container {
     flex: 1;
-    /* Esto empuja el footer al final */
     margin: 2rem auto;
-    max-width: 600px;
-    padding: 1.5rem;
-    background: #fff;
+    max-width: 900px;
+    padding: 2rem;
+    background: #b00000;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
 }
 
-.logo {
-    background-color: #222;
-}
-
-.container img {
-    width: 280px;
-}
+/* footer */
 
 footer {
-    background: #343a40;
-    color: #ccc;
+    background: #900000;
+    color: #ffffff;
     text-align: center;
     padding: 1rem;
     font-size: 0.9rem;
-    border-top: 2px solid #222;
+    border-top: 3px solid #000000;
 }
 
+/* titulos */
 
 h2 {
     text-align: center;
     margin-top: 0;
-    color: #212529;
+    color: #ffffff;
+    letter-spacing: 1px;
 }
+
+/* formularios */
 
 form {
     display: flex;
@@ -68,50 +77,133 @@ form {
     margin-top: 1rem;
 }
 
-input[type="file"] {
-    padding: 0.4rem;
-    border: 1px solid #ced4da;
+input,
+select {
+    padding: 0.6rem;
+    border: 1px solid #000000;
     border-radius: 6px;
-    background: #f1f1f1;
-    cursor: pointer;
+    background: #ffffff;
+    color: #000000;
 }
 
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+/* botones generales */
+
 button {
-    background-color: #28a745;
+    background-color: #000000;
     border: none;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    text-align: center;
+    color: #ffffff;
+    padding: 0.7rem 1.2rem;
     font-size: 1rem;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-weight: 700;
+    transition: 0.3s ease;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #222222;
+    transform: translateY(-2px);
 }
 
-.alert {
-    color: #155724;
-    background-color: #d4edda;
-    padding: 0.75rem 1rem;
-    border: 1px solid #c3e6cb;
-    border-radius: 6px;
-    font-weight: bold;
+/* productos */
+
+.products-container {
+  padding: 40px;
 }
 
-.btn-volver {
-    display: inline-block;
-    margin-top: 1rem;
-    background-color: #007bff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffffff;
 }
 
-.btn-volver:hover {
-    background-color: #0056b3;
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 35px;
+  justify-content: center;
+}
+
+/* tarjeta roja oscura */
+
+.card {
+  width: 300px;
+  background: #7a0000; /* rojo oscuro industrial */
+  border-radius: 14px;
+  padding: 25px;
+  text-align: center;
+  transition: 0.3s ease;
+  border: 1px solid #000000;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+}
+
+/* imagen cuadrada grande */
+
+.product-img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* siempre cuadrada */
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.35); /* fondo opaco */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* precio */
+
+.price {
+  font-weight: bold;
+  font-size: 22px;
+  color: #ffffff;
+  margin: 12px 0;
+}
+
+/* stock */
+
+.stock {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #dddddd;
+}
+
+/* cantidad */
+
+.quantity {
+  margin: 12px 0;
+}
+
+.quantity button {
+  padding: 6px 12px;
+  margin: 0 5px;
+  background-color: #000000;
+}
+
+.quantity button:hover {
+  background-color: #222222;
+}
+
+/* boton carrito */
+
+.btn-cart {
+  width: 100%;
+  padding: 12px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.btn-cart:hover {
+  background-color: #222222;
 }

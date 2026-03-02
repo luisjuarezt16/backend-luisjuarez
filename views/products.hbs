@@ -1,0 +1,57 @@
+{{!< main}}
+
+<section class="products-container">
+
+    <h2 class="title">PRODUCTOS DISPONIBLES</h2>
+
+    <div class="cards">
+
+        {{#each products}}
+        <div class="card">
+
+            <div class="img-box">
+                <img src="{{this.image}}" alt="{{this.name}}" class="product-img">
+            </div>
+
+            <h3>{{this.name}}</h3>
+
+            <p class="price">$ {{formatPrice this.price}}</p>
+
+            <p class="stock">Stock: {{this.stock}}</p>
+
+            <div class="quantity">
+                <button onclick="restar({{this.id}})">-</button>
+                <span id="cantidad-{{this.id}}">1</span>
+                <button onclick="sumar({{this.id}})">+</button>
+            </div>
+
+            <button class="btn-cart" onclick="agregarCarrito({{this.id}})">
+                Agregar al carrito
+            </button>
+
+        </div>
+        {{/each}}
+
+    </div>
+
+</section>
+
+<script>
+function sumar(id) {
+    const span = document.getElementById(`cantidad-${id}`)
+    span.innerText = parseInt(span.innerText) + 1
+}
+
+function restar(id) {
+    const span = document.getElementById(`cantidad-${id}`)
+    let cantidad = parseInt(span.innerText)
+    if (cantidad > 1) {
+        span.innerText = cantidad - 1
+    }
+}
+
+function agregarCarrito(id) {
+    const cantidad = document.getElementById(`cantidad-${id}`).innerText
+    alert(`Producto agregado. Cantidad: ${cantidad}`)
+}
+</script>

@@ -1,0 +1,56 @@
+{{!< main}}
+
+<section class="container">
+
+    <h2>SERVICIOS DE MANTENCIONES DISPONIBLES</h2>
+
+    <form action="/services" method="POST" enctype="multipart/form-data">
+
+        <div>
+            <label>Empresa:</label>
+            <input type="text" name="empresa" required>
+        </div>
+
+        <div>
+            <label>Tipo de Mantención:</label>
+            <select name="tipo" required>
+                <option value="">Seleccione...</option>
+                <option value="preventiva">Preventiva</option>
+                <option value="correctiva">Correctiva</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Fecha:</label>
+            <input type="date" name="fecha" required>
+        </div>
+
+        <div>
+            <label>Imagen 1:</label>
+            <input type="file" name="imagen1" accept="image/*" required>
+        </div>
+
+        <div>
+            <label>Imagen 2:</label>
+            <input type="file" name="imagen2" accept="image/*" required>
+        </div>
+
+        <button type="submit">Enviar</button>
+
+    </form>
+
+</section>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{#if success}}
+<script>
+    Swal.fire({
+        title: 'Éxito',
+        text: 'Formulario enviado correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    })
+</script>
+{{/if}}

@@ -25,7 +25,7 @@
                 <button onclick="sumar({{this.id}})">+</button>
             </div>
 
-            <button class="btn-cart" onclick="agregarCarrito({{this.id}})">
+            <button class="btn-cart" onclick=agregarCarrito({{this.id}})>
                 Agregar al carrito
             </button>
 
@@ -35,6 +35,8 @@
     </div>
 
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 function sumar(id) {
@@ -50,8 +52,30 @@ function restar(id) {
     }
 }
 
-function agregarCarrito(id) {
-    const cantidad = document.getElementById(`cantidad-${id}`).innerText
-    alert(`Producto agregado. Cantidad: ${cantidad}`)
+async function agregarCarrito(id) {
+
+    console.log("ID FRONT:", id); // DEBUG
+
+    const cantidad = parseInt(document.getElementById(`cantidad-${id}`).innerText)
+
+    const res = await fetch('/api/cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: Number(id), // 🔥 CLAVE
+            quantity: cantidad
+        })
+    });
+
+    const data = await res.json();
+    console.log("RESPUESTA:", data);
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Producto agregado',
+        text: `Se añadieron ${cantidad} unidad(es) al carrito`,
+        showConfirmButton: false,
+        timer: 1500
+    });
 }
 </script>

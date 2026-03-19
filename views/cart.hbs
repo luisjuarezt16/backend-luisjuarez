@@ -1,0 +1,206 @@
+{{!< main}}
+
+<section class="cart-container">
+
+    <h2 class="title">🛒 Carrito de Compras</h2>
+
+    {{#if hasProducts}}
+
+        <div class="cart-items">
+
+            {{#each cart}}
+            <div class="cart-item">
+
+                <div class="item-info">
+                    <h3>{{this.name}}</h3>
+                    <p>Precio: <strong>$ {{formatPrice this.price}}</strong></p>
+                    <p>Cantidad: <strong>{{this.quantity}}</strong></p>
+                </div>
+
+                <div class="item-subtotal">
+                    <p>Subtotal</p>
+                    <h4>$ {{formatPrice (multiply this.price this.quantity)}}</h4>
+                </div>
+
+                <button onclick="eliminarProducto('{{this.id}}')" class="btn-delete">
+                    ❌
+                </button>
+
+            </div>
+            {{/each}}
+
+        </div>
+
+        <div class="cart-summary">
+            <h3>Total a pagar</h3>
+            <p class="total-price">$ {{formatPrice total}}</p>
+
+            <button class="btn-pay" onclick="pagar()">
+                💳 Pagar
+            </button>
+        </div>
+
+    {{else}}
+
+        <div class="empty-cart">
+            <p>🛒 Tu carrito está vacío</p>
+            <a href="/products" class="btn-back">Ir a productos</a>
+        </div>
+
+    {{/if}}
+
+</section>
+
+<!-- 🔥 SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+// ❌ ELIMINAR
+async function eliminarProducto(id) {
+
+    const result = await Swal.fire({
+        title: '¿Eliminar producto?',
+        text: "Se quitará del carrito",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+        await fetch(`/api/cart/${id}`, {
+            method: 'DELETE'
+        });
+
+        location.reload();
+    }
+}
+
+// 💳 PAGAR
+async function pagar() {
+
+    const result = await Swal.fire({
+        title: '¿Confirmar compra?',
+        text: "Se generará el pedido",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Pagar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+
+        await fetch('/api/checkout', {
+            method: 'POST'
+        });
+
+        await Swal.fire({
+            icon: 'success',
+            title: 'Compra realizada',
+            confirmButtonText: 'OK'
+        });
+
+        window.location.href = "/products";
+    }
+}
+
+</script>
+
+<style>
+
+.cart-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #6d0505;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.item-info h3 {
+    margin-bottom: 5px;
+}
+
+.item-subtotal {
+    text-align: right;
+}
+
+.cart-summary {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.total-price {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.btn-pay {
+    background: #000000;
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-pay:hover {
+    background: #920f0f;
+}
+
+.btn-delete {
+    background: #c0392b;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 15px; 
+}
+
+.btn-delete:hover {
+    background: #922b21;
+}
+
+.empty-cart {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #3498db;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background: #21618c;
+}
+
+</style>

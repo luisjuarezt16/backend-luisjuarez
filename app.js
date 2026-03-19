@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import http from 'http'
 import { Server } from 'socket.io'
 
-// 🔥 Mongo
+// Mongo
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Product from "./models/products.js";
@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const PORT = 3000
 
-// 🔥 ENV + MONGO
+// URI
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI)
@@ -32,7 +32,7 @@ mongoose.connection.on('connected', () => {
     console.log("📡 DB NAME:", mongoose.connection.name);
 });
 
-// 🛒 CARRITO EN DB
+
 let cartId;
 
 // crear o reutilizar carrito
@@ -91,9 +91,7 @@ app.get('/chat', (req, res) => {
     res.render('chat', { title: 'Chat' })
 })
 
-/* =========================
-   📦 PRODUCTOS (Mongo)
-========================= */
+//productos (mongo)
 
 app.get('/products', async (req, res) => {
     try {
@@ -111,11 +109,9 @@ app.get('/products', async (req, res) => {
     }
 })
 
-/* =========================
-   🛒 CARRITO (Mongo)
-========================= */
+//carrito (mongo)
 
-// ➕ Agregar producto
+// Agregar producto
 app.post('/api/cart', async (req, res) => {
 
     let { id, quantity } = req.body;
@@ -152,7 +148,7 @@ app.post('/api/cart', async (req, res) => {
     res.json({ ok: true });
 });
 
-// 📄 Ver carrito
+//  Ver carrito
 app.get('/cart', async (req, res) => {
 
     const cart = await Cart.findById(cartId).lean();
@@ -179,7 +175,7 @@ app.get('/cart', async (req, res) => {
     });
 });
 
-// ❌ Eliminar producto
+//  Eliminar producto
 app.delete('/api/cart/:id', async (req, res) => {
 
     const id = Number(req.params.id);
@@ -193,7 +189,7 @@ app.delete('/api/cart/:id', async (req, res) => {
     res.json({ ok: true });
 });
 
-// 💰 Checkout
+// Checkout
 app.post('/api/checkout', async (req, res) => {
 
     const cart = await Cart.findById(cartId).lean();
@@ -213,9 +209,7 @@ app.post('/api/checkout', async (req, res) => {
     res.json({ ok: true });
 });
 
-/* =========================
-   🔌 SOCKET.IO
-========================= */
+//socket
 
 io.on("connection", (socket) => {
 
@@ -230,9 +224,7 @@ io.on("connection", (socket) => {
     })
 })
 
-/* =========================
-   ❌ 404
-========================= */
+//404
 
 app.use((req, res) => {
     res.status(404).render('404', {

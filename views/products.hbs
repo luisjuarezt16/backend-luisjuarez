@@ -62,7 +62,7 @@ async function agregarCarrito(id) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            id: Number(id), // 🔥 CLAVE
+            id: Number(id),
             quantity: cantidad
         })
     });

@@ -19,13 +19,15 @@
 
             <p class="stock">Stock: {{this.stock}}</p>
 
+            <!-- 🔥 CAMBIO: usar _id -->
             <div class="quantity">
-                <button onclick="restar({{this.id}})">-</button>
-                <span id="cantidad-{{this.id}}">1</span>
-                <button onclick="sumar({{this.id}})">+</button>
+                <button onclick="restar('{{this._id}}')">-</button>
+                <span id="cantidad-{{this._id}}">1</span>
+                <button onclick="sumar('{{this._id}}')">+</button>
             </div>
 
-            <button class="btn-cart" onclick=agregarCarrito({{this.id}})>
+            <!-- 🔥 CAMBIO: usar _id -->
+            <button class="btn-cart" onclick="agregarCarrito('{{this._id}}')">
                 Agregar al carrito
             </button>
 
@@ -54,7 +56,7 @@ function restar(id) {
 
 async function agregarCarrito(id) {
 
-    console.log("ID FRONT:", id); // DEBUG
+    console.log("🆔 ID FRONT:", id);
 
     const cantidad = parseInt(document.getElementById(`cantidad-${id}`).innerText)
 
@@ -62,13 +64,13 @@ async function agregarCarrito(id) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            id: Number(id),
+            id: id, // 🔥 YA NO Number()
             quantity: cantidad
         })
     });
 
     const data = await res.json();
-    console.log("RESPUESTA:", data);
+    console.log("📦 RESPUESTA:", data);
 
     Swal.fire({
         icon: 'success',
